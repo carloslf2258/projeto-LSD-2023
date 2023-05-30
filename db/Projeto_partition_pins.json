@@ -1,0 +1,197 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "display_select[0]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[1]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[2]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[3]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[4]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[5]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[6]",
+					"strict" : false
+				},
+				{
+					"name" : "display_select[7]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[0]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[1]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[2]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[0]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[1]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[2]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[3]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[4]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[5]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[6]",
+					"strict" : false
+				},
+				{
+					"name" : "TimeValue[7]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[0]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[0]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[0]",
+					"strict" : false
+				},
+				{
+					"name" : "timer_exp",
+					"strict" : false
+				},
+				{
+					"name" : "start_stop",
+					"strict" : false
+				},
+				{
+					"name" : "clock",
+					"strict" : false
+				},
+				{
+					"name" : "reset",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[1]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[1]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[1]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[2]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[2]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[2]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[3]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[3]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[3]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[4]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[4]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[4]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[5]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[5]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[5]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[6]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[6]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[6]",
+					"strict" : false
+				},
+				{
+					"name" : "time_cozer[7]",
+					"strict" : false
+				},
+				{
+					"name" : "time_levedar[7]",
+					"strict" : false
+				},
+				{
+					"name" : "time_amassar[7]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

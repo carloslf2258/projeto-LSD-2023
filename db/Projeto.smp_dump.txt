@@ -1,0 +1,8 @@
+
+State Machine - |FSM|state
+Name state.EXTRA state.COZER state.LEVEDAR state.AMASSAR state.IDLE 
+state.IDLE 0 0 0 0 0 
+state.AMASSAR 0 0 0 1 1 
+state.LEVEDAR 0 0 1 0 1 
+state.COZER 0 1 0 0 1 
+state.EXTRA 1 0 0 0 1 
