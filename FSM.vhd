@@ -33,11 +33,11 @@ begin
     display_select <= display_time; -- assign display_select the value of display_time
 
     -- process for state transition
-    sync_proc : process(clock, reset) --reset assíncrono
+    sync_proc : process(clk, reset) --reset assíncrono
     begin
         if reset = '1' then
             state <= IDLE;
-        elsif rising_edge(clock) then
+        elsif rising_edge(clk) then
             state <= next_state;
         end if;
     end process;
