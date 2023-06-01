@@ -6,25 +6,33 @@ use IEEE.STD_LOGIC_UNSIGNED.all;
 entity FSM is
     Port ( clk : in std_logic;
            reset : in std_logic;
-           time_cozer : in std_logic_vector(7 downto 0);
+			  
+			  time_amassar : in std_logic_vector(7 downto 0);
            time_levedar : in std_logic_vector(7 downto 0);
-           time_amassar : in std_logic_vector(7 downto 0);
-           start_stop : in std_logic;
-           timer_exp : in std_logic;
-           LEDR : out std_logic;
+			  time_cozer : in std_logic_vector(7 downto 0);
+			  timer_exp : in std_logic;
+			  
+			  start_stop : in std_logic;
+           
+			  LEDR : out std_logic;
+			  LEDG : out std_logic_vector(2 downto 0);
+           
            display_select : out std_logic_vector(7 downto 0);
-           LEDG : out std_logic_vector(2 downto 0);
+   
            NewTime : out std_logic;
            TimeValue : out std_logic_vector(7 downto 0);
-           timer_enable : out std_logic);
+           timer_enable : out std_logic
+			  );
 end FSM;
 
 architecture Behavioral of FSM is
     type state_type is (IDLE, AMASSAR, LEVEDAR, COZER);
+	 
     signal state, next_state : state_type;
     signal total_time : std_logic_vector(7 downto 0);
     signal counter : std_logic_vector(7 downto 0);
     signal display_time : std_logic_vector(7 downto 0);
+	 
 begin
     display_select <= display_time;
 

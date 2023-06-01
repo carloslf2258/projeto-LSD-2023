@@ -1,0 +1,79 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.STD_LOGIC_ARITH.all;
+use IEEE.STD_LOGIC_UNSIGNED.all;
+
+entity FSM is
+    Port ( reset : in std_logic;
+           clock : in std_logic;
+           time_extra : in std_logic_vector(4 downto 0);
+           time_cozer : in std_logic_vector(4 downto 0);
+           time_levedar : in std_logic_vector(4 downto 0);
+           time_amassar : in std_logic_vector(4 downto 0);
+           start_stop : in std_logic;
+           timer_exp : in std_logic;
+           LEDR : out std_logic;
+           display_select : out std_logic_vector(3 downto 0);
+           LEDG : out std_logic_vector(2 downto 0);
+           NewTime : out std_logic;
+           TimeValue : out std_logic_vector(4 downto 0);
+           timer_enable : out std_logic);
+end FSM;
+
+architecture Behavioral of FSM is
+    type state_type is (AMASSAR, LEVEDAR, COZER, EXTRA);
+    signal state, next_state : state_type;
+begin
+    -- process for state transition
+    process(clock, reset)
+    begin
+        if reset = '1' then
+            state <= AMASSAR;
+        elsif rising_edge(clock) then
+            state <= next_state;
+        end if;
+    end process;
+
+    -- process for state outputs and next state logic
+    process(state, time_extra, time_cozer, time_levedar, time_amassar, start_stop, timer_exp)
+    begin
+        case state is
+            when AMASSAR =>
+                LEDG <= "100"; -- LEDG(2) ON
+                timer_enable <= '1';
+                TimeValue <= time_amassar;
+                if timer_exp = '1' then
+                    next_state <= LEVEDAR;
+                else
+                    next_state <= AMASSAR;
+                end if;
+            when LEVEDAR =>
+                LEDG <= "010"; -- LEDG(1) ON
+                timer_enable <= '1';
+                TimeValue <= time_levedar;
+                if timer_exp = '1' then
+                    next_state <= COZER;
+                else
+                    next_state <= LEVEDAR;
+                end if;
+            when COZER =>
+                LEDG <= "001"; -- LEDG(0) ON
+                timer_enable <= '1';
+                TimeValue <= time_cozer;
+                if timer_exp = '1' then
+                    next_state <= EXTRA;
+                else
+                    next_state <= COZER;
+                end if;
+            when EXTRA =>
+                LEDG <= "000"; -- All LEDs OFF
+                timer_enable <= '1';
+                TimeValue <= time_extra;
+                if timer_exp = '1' then
+                    next_state <= AMASSAR;
+                else
+                    next_state <= EXTRA;
+                end if;
+        end case;
+    end process;
+end Behavioral;

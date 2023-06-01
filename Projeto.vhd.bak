@@ -1,0 +1,50 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity TopLevel is
+    Port (
+        clk: in std_logic;
+        reset: in std_logic;
+        key0: in std_logic;
+        key1: in std_logic;
+        P1: in std_logic;
+        P2: in std_logic;
+        Time_adjust: in std_logic;
+        StartStop: in std_logic;
+        LEDR: out std_logic;
+        LEDG: out std_logic_vector (2 downto 0);
+        HEX4: out std_logic_vector (7 downto 0);
+        HEX: out std_logic_vector (7 downto 0);
+        DEC: out std_logic_vector (7 downto 0)
+    );
+end TopLevel;
+
+architecture Behavioral of TopLevel is
+    -- Declare internal signals here
+    signal RegOutputs: std_logic_vector (3 downto 0);
+    signal timerExp: std_logic;
+    -- Declare components here
+begin
+    -- Instantiate Register
+    Reg: entity work.Register(Behavioral) port map (
+        clk => clk,
+        reset => reset,
+        -- Map other inputs/outputs
+    );
+    -- Instantiate FSM
+    FSM: entity work.FSM(Behavioral) port map (
+        clk => clk,
+        reset => reset,
+        -- Map other inputs/outputs
+    );
+    -- Instantiate TimerFSM
+    TimerFSM: entity work.TimerFSM(Behavioral) port map (
+        clk => clk,
+        reset => reset,
+        -- Map other inputs/outputs
+    );
+    -- Instantiate DisplaySelect
+    DispSelect: entity work.DisplaySelect(Behavioral) port map (
+        -- Map inputs/outputs
+    );
+end Behavioral;
