@@ -14,7 +14,7 @@ entity MyRegister is
 		  Time_cozer : out STD_LOGIC_VECTOR(3 downto 0);
 		  Time_levedar : out STD_LOGIC_VECTOR(3 downto 0);
         Time_amassar : out STD_LOGIC_VECTOR(3 downto 0);
-        Time_adjust : in STD_LOGIC_VECTOR(2 downto 0);
+    --    Time_adjust : in STD_LOGIC_VECTOR(2 downto 0);
         
       --  Time_extra : out STD_LOGIC_VECTOR(2 downto 0);
         
