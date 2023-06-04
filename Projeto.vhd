@@ -119,8 +119,17 @@ architecture Behavioral of Projeto is
 								timerExp => timerExp
 								);
 								
+								
+	-- Instantiate BinToDec
+	BinToDec: entity work.BinToDec(Behavioral) 
+					port map (binIn => ...,
+								decOut0 => ...,
+								decOut1 => ...
+								);
+								
+								
    -- Instantiate DisplaySelect
-	DispSelect: entity work.DisplaySelect(Behavioral) 
+	DisplaySelect: entity work.DisplaySelect(Behavioral) 
 					port map (ValueFromFSM => displaySelect,
 								Start_Stop => KEY(3),
 								HEX0 => HEX0,
