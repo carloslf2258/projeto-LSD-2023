@@ -1,7 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity FSM is
     Port ( clk : in std_logic;
@@ -45,7 +44,7 @@ begin
         timer_enable <= '1';
         LEDR <= '0';
         LEDG <= "000";
-		  total_time <= time_amassar + time_levedar + time_cozer;
+		  total_time <= std_logic_vector(unsigned(time_amassar) + unsigned(time_levedar) + unsigned(time_cozer));
         display_select <= total_time;
         
         case state is
