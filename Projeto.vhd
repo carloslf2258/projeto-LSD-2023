@@ -31,6 +31,7 @@ architecture Behavioral of Projeto is
 	 
 	--signal RegExtra: std_logic_vector (7 downto 0);
 	
+	
 	signal RegStart_Stop: std_logic;
 	
    signal timerExp: std_logic;
@@ -128,5 +129,8 @@ architecture Behavioral of Projeto is
             end if;
         end if;
     end process;
+	 
+	 
+	 
 		
 end Behavioral;
