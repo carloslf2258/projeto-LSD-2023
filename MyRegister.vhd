@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.all;
 
 entity MyRegister is
 	Port (
@@ -9,12 +10,17 @@ entity MyRegister is
       BreadType : in STD_LOGIC; -- '0' for "CASEIRO", '1' for "RÚSTICO"
 		  
 		Start_Stop : in STD_LOGIC;
-		  
+		
+		--Tempos predefinidos  
 		Time_cozer : out STD_LOGIC_VECTOR(7 downto 0);
 		Time_levedar : out STD_LOGIC_VECTOR(7 downto 0);
       Time_amassar : out STD_LOGIC_VECTOR(7 downto 0);
 		  
-      Start_Stop_out : out STD_LOGIC
+      Start_Stop_out : out STD_LOGIC;
+		
+		--Para o tempo antes de começar a trabalhar
+		time_adjust : in STD_LOGIC_VECTOR(7 downto 0);
+		time_adjust_out : out STD_LOGIC_VECTOR(7 downto 0)
     );
 end MyRegister;
 
@@ -24,6 +30,7 @@ architecture Behavioral of MyRegister is
     signal s_Time_levedar : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
     signal s_Time_amassar : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
     signal s_Start_Stop : STD_LOGIC := '0';
+	 signal s_time_adjust : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 
 begin
     process (clk)
@@ -59,5 +66,10 @@ begin
     Time_levedar <= s_Time_levedar;
     Time_amassar <= s_Time_amassar;
     Start_Stop_out <= s_Start_Stop;
+	 
+	 --Atribuir o valor de time_adjust ao sinal s_time_adjust
+	 s_time_adjust <= std_logic_vector(unsigned(time_adjust));
+	 --Depois meter esse valor no output respetivo
+	 time_adjust_out <= s_time_adjust;
 
 end Behavioral;

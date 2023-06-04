@@ -9,8 +9,8 @@ entity Projeto is
 		KEY(2) -> RESET
 		KEY(3) -> START_STOP  */
 		
-		--BreadType  CASEIRO OU RÚSTICO
-		SW: in std_logic_vector (0 downto 0);
+		--BreadType  CASEIRO OU RÚSTICO e time_adjust (até 255 segundos)
+		SW: in std_logic_vector (8 downto 0);
 		
   --      Time_adjust: in std_logic_vector(2 downto 0);
   
@@ -40,6 +40,8 @@ architecture Behavioral of Projeto is
    signal timeValue: std_logic_vector (7 downto 0);
 	
    signal displaySelect: std_logic_vector (7 downto 0);
+	
+	signal s_time_adjust_out : std_logic_vector (7 downto 0);
    
 	 
 	--Clk
@@ -65,11 +67,14 @@ architecture Behavioral of Projeto is
 						Time_cozer => RegCozer,
 						Time_levedar => RegLevedar,
 						Time_amassar => RegAmassar,
-				--		Time_adjust => Time_adjust,
 						
-						--Time_extra => RegExtra,
 				
-						Start_Stop_out => RegStart_Stop
+						Start_Stop_out => RegStart_Stop,
+						
+						-- time_adjust (até 255 segundos),
+						time_adjust => SW(8 downto 1),
+						time_adjust_out => s_time_adjust_out
+						
 						);
 
 
@@ -94,7 +99,12 @@ architecture Behavioral of Projeto is
 						NewTime => newTime,
 						TimeValue => timeValue,
 						
-						timer_enable => timerEnable 
+						timer_enable => timerEnable,
+						
+						adjusted_time => s_time_adjust_out,
+						KEY_0 => KEY(0), 
+						KEY_1 => KEY(1)
+						
 						);
 						
     -- Instantiate TimerFSM

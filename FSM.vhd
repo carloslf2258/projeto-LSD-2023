@@ -17,14 +17,21 @@ entity FSM is
 			  display_select : out std_logic_vector(7 downto 0);
 			  NewTime : out std_logic;
            TimeValue : out std_logic_vector(7 downto 0);
-           timer_enable : out std_logic
+           timer_enable : out std_logic;
+			  
+			  adjusted_time : in std_logic_vector(7 downto 0);
+			  
+			  KEY_0 : in std_logic;
+			  KEY_1 : in std_logic
 			  );
 end FSM;
 
 architecture Behavioral of FSM is
-    type state_type is (IDLE, AMASSAR, LEVEDAR, COZER);
+    type state_type is (IDLE, AMASSAR, LEVEDAR, COZER, DELAYED_TIME, ACABANDO, EXTRA);
     signal state, next_state : state_type;
     signal total_time : std_logic_vector(7 downto 0) := (others => '0');
+	 
+	 signal extra_time : std_logic_vector(7 downto 0) := (others => '0');
 	 
 begin
 
@@ -34,11 +41,21 @@ begin
         if reset = '1' then
             state <= IDLE;
         elsif rising_edge(clk) then
-            state <= next_state;
+            if start_stop = '1' and state = IDLE then
+				
+			--Ver se há tempo de ajuste, se não, então avança para AMASSAR
+                if adjusted_time = "00000000" then                    
+                    state <= AMASSAR;
+                else
+                    state <= DELAYED_TIME;
+                end if;
+            else
+                state <= next_state;
+            end if;						
         end if;
     end process;
 
-    process(state, time_amassar, time_levedar, time_cozer, start_stop, timer_exp)
+    process(state, time_amassar, time_levedar, time_cozer, start_stop, timer_exp, KEY_0, KEY_1, adjusted_time, extra_time)
     begin
 	 --Atribuições repetitivas: tira-se dos cases e muda-se no case que importa 
         timer_enable <= '1';
@@ -59,6 +76,18 @@ begin
                 else
                     display_select <= (others => '0'); 
                     next_state <= IDLE;
+                end if;
+				
+				when DELAYED_TIME =>
+					 display_select <= adjusted_time;
+					 --Valores para TimerFSM
+					 NewTime <= '1';
+                timeValue <= adjusted_time;
+                
+                if timer_exp = '1' then
+                    next_state <= AMASSAR;
+                else
+                    next_state <= DELAYED_TIME;
                 end if;
 
             when AMASSAR =>
@@ -101,9 +130,55 @@ begin
                 timeValue <= time_cozer;
 					 
                 if timer_exp = '1' then
-                    next_state <= IDLE;
+						  next_state <= ACABANDO;
+					 else
+						  next_state <= COZER;
                 end if;
+					 
+				when ACABANDO =>
+                LEDR <= '1';
+                LEDG <= "000";
+					 display_Select<= "00000000";
+					 
+					 --Valores para TimerFSM
+					 NewTime <= '1';
+                TimeValue <= "00000010";
+                if timer_exp = '1' then
+                    LEDR <= '0';
+                    next_state <= EXTRA;
+                else
+                    next_state <= ACABANDO;
+                end if;
+					 
+					 
+				when EXTRA =>
+					NewTime <= '0';
+					LEDR <= '1';
+					LEDG <= "001";
+					display_select <= extra_time;
 
+					--Se clicar na KEY_1, independente do tempo extra
+					if KEY_1 = '1' then
+						next_state <= IDLE;
+						extra_time <= (others => '0'); -- Reset extra_time
+					-- Se clicar na KEY_0, aumenta o tempo extra até 5s
+					elsif KEY_0 = '1' then
+						if unsigned(extra_time) < 5 then
+							extra_time <= std_logic_vector(unsigned(extra_time) + 1);
+						end if;
+					end if;
+
+					-- Se clicar em start_stop, inicia a cozedura com o tempo extra
+					if start_stop = '1' then
+						NewTime <= '1';
+						TimeValue <= extra_time;
+						next_state <= COZER;
+						extra_time <= (others => '0'); -- Reset extra_time após iniciar a cozedura
+					end if;
+
+					 
+
+				--"Catch all" condition
             when others =>
                 next_state <= IDLE;
         end case;
