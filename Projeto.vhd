@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 entity Projeto is
-	Port (
+	port (
 		CLOCK_50: in std_logic;
 		  
 		KEY : in std_logic_vector(3 downto 0);
@@ -42,6 +42,8 @@ architecture Behavioral of Projeto is
    signal displaySelect: std_logic_vector (7 downto 0);
 	
 	signal s_time_adjust_out : std_logic_vector (7 downto 0);
+	
+	signal s_decOut : std_logic_vector(7 downto 0);
    
 	 
 	--Clk
@@ -62,7 +64,7 @@ architecture Behavioral of Projeto is
 						
 						BreadType => SW(0),
 						
-						Start_Stop => KEY(3),
+						Start_Stop => KEY(0 downto 0),
 						
 						Time_cozer => RegCozer,
 						Time_levedar => RegLevedar,
@@ -122,26 +124,25 @@ architecture Behavioral of Projeto is
 								
 	-- Instantiate BinToDec
 	BinToDec: entity work.BinToDec(Behavioral) 
-					port map (binIn => ...,
-								decOut0 => ...,
-								decOut1 => ...
+					port map (binIn => displaySelect,
+								decOut => s_decOut
 								);
 								
 								
    -- Instantiate DisplaySelect
-	DisplaySelect: entity work.DisplaySelect(Behavioral) 
-					port map (ValueFromFSM => displaySelect,
-								Start_Stop => KEY(3),
+	DisplaySelect1: entity work.DisplaySelect(Behavioral) 
+					port map (ValueFromFSM => s_decOut,
+								Start_Stop1 => KEY(3),
 								HEX0 => HEX0,
 								HEX1 => HEX1
 								);
 								
-	process(KEY(3), KEY(2)) -- Start_Stop, reset
+	process(CLOCK_50) -- Start_Stop, reset
     begin
         if KEY(2) = '1' then
             RegStart_Stop <= '0';
-        elsif rising_edge(KEY(3)) then
-            if RegStart_Stop = '0' then
+        elsif rising_edge(CLOCK_50) then
+            if KEY(3) = '0' then
                 RegStart_Stop <= '1';
             else
                 RegStart_Stop <= '0';

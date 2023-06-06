@@ -9,7 +9,7 @@ entity MyRegister is
 		  
       BreadType : in STD_LOGIC; -- '0' for "CASEIRO", '1' for "RÚSTICO"
 		  
-		Start_Stop : in STD_LOGIC;
+		Start_Stop : in STD_LOGIC_VECTOR(0 downto 0);
 		
 		--Tempos predefinidos  
 		Time_cozer : out STD_LOGIC_VECTOR(7 downto 0);
@@ -56,7 +56,7 @@ begin
             end if;
             
 				--Se é clicado, muda entre Start e Stop
-            if Start_Stop = '1' then
+            if Start_Stop = "1" then
                 s_Start_Stop <= not s_Start_Stop;
             end if;
         end if;
